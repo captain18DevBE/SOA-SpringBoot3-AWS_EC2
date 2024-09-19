@@ -13,7 +13,7 @@ import com.devteria.identity.dto.request.ApiResponse;
 import com.devteria.identity.exception.ErrorCode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+public class AuthEntryPointJwt implements AuthenticationEntryPoint {
     @Override
     public void commence(
             HttpServletRequest request, HttpServletResponse response, AuthenticationException authException)

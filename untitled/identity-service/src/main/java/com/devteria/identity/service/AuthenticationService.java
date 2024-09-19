@@ -49,6 +49,14 @@ public class AuthenticationService {
     @Value("${jwt.signerKey}")
     protected String signerKey;
 
+    @NonFinal
+    @Value("${jwt.expiryTime}")
+    protected long expiryTimeJWT;
+
+    @NonFinal
+    @Value("${jwt.refreshTime}")
+    protected long refreshTimeJWT;
+
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         var token = request.getToken();
         boolean isValid = true;
@@ -121,12 +129,12 @@ public class AuthenticationService {
 
         Date issueTime = new Date();
         Date expiryTime = new Date(Instant.ofEpochMilli(issueTime.getTime())
-                .plus(1, ChronoUnit.HOURS)
+                .plus(expiryTimeJWT, ChronoUnit.SECONDS)
                 .toEpochMilli());
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
-                .issuer("devteria.com")
+                .issuer("tlduy18dev@gmail.com")
                 .issueTime(issueTime)
                 .expirationTime(expiryTime)
                 .jwtID(UUID.randomUUID().toString())
